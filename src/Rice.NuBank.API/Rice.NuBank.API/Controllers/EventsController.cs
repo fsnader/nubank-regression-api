@@ -1,11 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rice.NuBank.API.Attributes;
 using Rice.NuBank.Business.NuBank;
 using Rice.NuBank.Domain.Authentication;
+using Rice.SDK.Utils;
 
 namespace Rice.NuBank.API.Controllers
 {
+    [ApiExceptionFilter]
     public class EventsController: Controller
     {
         private readonly INubankService _nubankService;
@@ -15,19 +18,19 @@ namespace Rice.NuBank.API.Controllers
             _nubankService = nubankService;
         }
         
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("api/[controller]/")]
-        public async Task<IActionResult> GetEvents(string cpf)
+        public async Task<IActionResult> GetEvents()
         {
-            var events = await _nubankService.GetEvents(cpf);
+            var events = await _nubankService.GetEvents(User.GetUserName());
             return Ok(events);
         }
         
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("api/[controller]/month")]
         public async Task<IActionResult> GetCurrentMonthEvents(string cpf)
         {
-            var events = await _nubankService.GetEvents(cpf);
+            var events = await _nubankService.GetEvents(User.GetUserName());
             return Ok(events);
         }
     }
