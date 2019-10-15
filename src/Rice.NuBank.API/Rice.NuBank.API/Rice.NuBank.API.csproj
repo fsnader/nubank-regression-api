@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+        <PackageReference Include="NubankClient" Version="0.4.0" />
+        <PackageReference Include="Rice.SDK" Version="1.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Rice.NuBank.Business\Rice.NuBank.Business.csproj" />
+      <ProjectReference Include="..\Rice.NuBank.Domain\Rice.NuBank.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

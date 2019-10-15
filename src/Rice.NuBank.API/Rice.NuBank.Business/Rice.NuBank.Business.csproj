@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NubankClient" Version="0.4.0" />
+      <PackageReference Include="Rice.SDK" Version="1.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Rice.NuBank.Domain\Rice.NuBank.Domain.csproj" />
+      <ProjectReference Include="..\Rice.NuBank.Repository\Rice.NuBank.Repository.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Metrics" />
+    </ItemGroup>
+
+</Project>
