@@ -30,7 +30,7 @@ namespace Rice.NuBank.API.Controllers
         [HttpGet("api/[controller]/month")]
         public async Task<IActionResult> GetCurrentMonthEvents(string cpf)
         {
-            var events = await _nubankService.GetEvents(User.GetUserName());
+            var events = await _nubankService.GetCurrentMonthSummary(User.GetUserName());
             return Ok(events);
         }
     }

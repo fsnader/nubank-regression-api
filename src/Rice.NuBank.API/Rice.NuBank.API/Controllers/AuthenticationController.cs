@@ -25,15 +25,14 @@ namespace Rice.NuBank.API.Controllers
         public async Task<IActionResult> Login(
             [FromBody] LoginCredentials login)
         {
-            var qrCode = await _nubankService.Login(login);
-            return Ok(qrCode);
+            return Ok(await _nubankService.Login(login));
         }
 
         [Authorize]
         [HttpGet("api/[controller]/qr-code")]
         public async Task<IActionResult> GetQrCode()
         {
-            return Ok(_nubankService.GetQrCode(User));
+            return Ok(await _nubankService.GetQrCode(User));
         }
         
         [Authorize]

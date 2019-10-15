@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using NubankClient;
 using NubankClient.Model.Events;
+using NubankClient.Model.Login;
 using Rice.NuBank.Domain;
 using Rice.NuBank.Domain.Authentication;
 using Rice.NuBank.Domain.Metrics;
@@ -33,22 +34,22 @@ namespace Rice.NuBank.Business.NuBank
             if (!_nubankInstances.TryGetValue(login.CPF, out _))
             {
                 var nubankClient = new Nubank(login.CPF, login.Password);
-                await LoginOrThrow(nubankClient);
+                var loginResult = await LoginOrThrow(nubankClient);
                 
                 if (_nubankInstances.TryAddValue(login.CPF, nubankClient))
                 {
-                    return GetToken(login.CPF, "f1a21f6b-21ce-4e42-9bd6-1aabf4a7c2bd");
+                    return GetToken(login.CPF, loginResult.Code);
                 }
             }
 
             throw new BadRequestException();
         }
         
-        private async Task LoginOrThrow(Nubank nubankClient)
+        private async Task<LoginResponse> LoginOrThrow(Nubank nubankClient)
         {
             try
             {
-                await nubankClient.LoginAsync();
+                return await nubankClient.LoginAsync();
             }
             catch (Exception e)
             {
