@@ -3,7 +3,8 @@ using System;
 namespace Rice.NuBank.Domain.Metrics
 {
     /// <summary>
-    /// Based in https://gist.github.com/NikolayIT/d86118a3a0cb3f5ed63d674a350d75f2
+    /// Based in NikolayIT linear regression implementation:
+    /// https://gist.github.com/NikolayIT/d86118a3a0cb3f5ed63d674a350d75f2
     /// </summary>
     public class LinearRegression
     {
