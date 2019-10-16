@@ -12,6 +12,11 @@ namespace Rice.NuBank.Domain.Metrics
         public Decimal Total { get; set; }
         public Event[] Events { get; set; }
 
+        public DailySummary()
+        {
+            
+        }
+        
         public DailySummary(int day, IEnumerable<Event> events)
         {
             Day = day;
