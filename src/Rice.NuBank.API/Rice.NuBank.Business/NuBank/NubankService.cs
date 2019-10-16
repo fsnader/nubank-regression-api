@@ -91,7 +91,7 @@ namespace Rice.NuBank.Business.NuBank
 
             return new MonthlySummary(
                 DateTime.Now.Month,
-                events.Where(e => e.Time.Year == DateTime.Now.Year && e.Time.Year == DateTime.Now.Month));
+                events.Where(e => e.Time.Year == DateTime.Now.Year && e.Time.Month == DateTime.Now.Month));
         }
 
         private AuthenticationToken GetToken(string cpf, string qrCode)

@@ -22,23 +22,32 @@ namespace Rice.NuBank.Domain.Metrics
             }).ToArray();
 
         public string LinearModel => _linearModel.ToString();
-        
+
         public Decimal TotalAmount => Days.Sum(d => d.Total);
 
-        public decimal EndOfDayEstimatedValue => (decimal) _linearModel.EstimateValue(31);
+        public decimal EndOfMonthEstimatedValue => (decimal) _linearModel.EstimateValue(31);
 
         public MonthlySummary(int month, IEnumerable<Event> events)
         {
             Month = month;
             Days = events
-                .Where(e => e.Time.Month == Month)
+                .Where(e => e.Time.Month == Month &&
+                            // TODO: Ver como pegar parcelas e jogar para dia 0
+                            (e.Category == EventCategory.Transaction || e.Category == EventCategory.Unknown))
                 .GroupBy(e => e.Time.Day)
                 .Select(g => new DailySummary(g.Key, g))
+                .OrderBy(e => e.Day)
                 .ToArray();
 
-            _linearModel = LinearRegression.CreateFromData(
-                Days.Select(a => (double) a.Day).ToArray(),
-                Days.Select(a => (double) a.Total).ToArray());
+            var yValues = new List<double> {0};
+            var xValues = new List<double> {0};
+            foreach (var day in Days)
+            {
+                xValues.Add((double) day.Day);
+                yValues.Add((double) day.Total + yValues.LastOrDefault());
+            }
+
+            _linearModel = LinearRegression.CreateFromData(xValues.ToArray(), yValues.ToArray());
         }
     }
 }
